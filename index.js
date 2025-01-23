@@ -1,4 +1,5 @@
 const express = require('express');
+const {mapLoriotPayloadToNativeModel} = require('./deviceServerDataMapping');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,6 +9,7 @@ app.use(express.json());
 
 // Endpoint to handle uplink messages
 app.post('/uplink-messages', async (req, res) => {
+    console.log("testing the uplink----");
   try {
     const uplinkData = req.body; // Extract data from request body
     console.log('Request body:', uplinkData);
@@ -34,6 +36,7 @@ app.post('/uplink-messages', async (req, res) => {
     //       decoded: message.decoded || null,
     //     },
     //   });
+    mapLoriotPayloadToNativeModel(message);
     console.log("getting the data...",message);    
 }
 
