@@ -8,42 +8,58 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Endpoint to handle uplink messages
+// app.post('/uplink-messages', async (req, res) => {
+//     console.log("testing the uplink----");
+//   try {
+//     const uplinkData = req.body; // Extract data from request body
+//     console.log('Request body:', uplinkData);
+
+//     // Ensure uplinkData is an array or handle single objects
+//     const dataToInsert = Array.isArray(uplinkData) ? uplinkData : [uplinkData];
+//     console.log('Data to insert:', dataToInsert);
+
+//     // Store each uplink message in the database
+//     for (const message of dataToInsert) {
+//     //   await prisma.uplinkMessage.create({
+//     //     data: {
+//     //       cmd: message.cmd,
+//     //       seqno: message.seqno,
+//     //       EUI: message.EUI,
+//     //       ts: BigInt(message.ts), // Ensure BigInt type for ts
+//     //       ack: message.ack,
+//     //       bat: message.bat,
+//     //       fcnt: BigInt(message.fcnt), // Ensure BigInt type for fcnt
+//     //       port: message.port,
+//     //       offline: message.offline,
+//     //       encdata: message.encdata || null,
+//     //       data: message.data || null,
+//     //       decoded: message.decoded || null,
+//     //     },
+//     //   });
+//     mapLoriotPayloadToNativeModel(message);   
+// }
+//     console.log('Uplink messages stored successfully.');
+//     return res.status(200).json({ message: 'Success' });
+//   } catch (error) {
+//     console.error('Error storing uplink messages:', error.message);
+//     return res.status(500).json({ error: 'Failed to store uplink messages' });
+//   }
+// });
+
 app.post('/uplink-messages', async (req, res) => {
-    console.log("testing the uplink----");
+  console.log("Testing the uplink----");
   try {
     const uplinkData = req.body; // Extract data from request body
     console.log('Request body:', uplinkData);
 
-    // Ensure uplinkData is an array or handle single objects
-    const dataToInsert = Array.isArray(uplinkData) ? uplinkData : [uplinkData];
-    console.log('Data to insert:', dataToInsert);
+    // Call your mapping function to handle the uplink message
+    mapLoriotPayloadToNativeModel(uplinkData);
 
-    // Store each uplink message in the database
-    for (const message of dataToInsert) {
-    //   await prisma.uplinkMessage.create({
-    //     data: {
-    //       cmd: message.cmd,
-    //       seqno: message.seqno,
-    //       EUI: message.EUI,
-    //       ts: BigInt(message.ts), // Ensure BigInt type for ts
-    //       ack: message.ack,
-    //       bat: message.bat,
-    //       fcnt: BigInt(message.fcnt), // Ensure BigInt type for fcnt
-    //       port: message.port,
-    //       offline: message.offline,
-    //       encdata: message.encdata || null,
-    //       data: message.data || null,
-    //       decoded: message.decoded || null,
-    //     },
-    //   });
-    mapLoriotPayloadToNativeModel(message);   
-}
-
-    console.log('Uplink messages stored successfully.');
+    console.log('Uplink message processed successfully.');
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
-    console.error('Error storing uplink messages:', error.message);
-    return res.status(500).json({ error: 'Failed to store uplink messages' });
+    console.error('Error processing uplink message:', error.message);
+    return res.status(500).json({ error: 'Failed to process uplink message' });
   }
 });
 
