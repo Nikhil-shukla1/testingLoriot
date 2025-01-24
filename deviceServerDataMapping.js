@@ -53,11 +53,14 @@ const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
     seqno: loriotPayload.seqno,
     port: loriotPayload.port,
     ack: loriotPayload.ack,
-    pdu: loriotPayload.data || loriotPayload.encdata,  // Assuming encrypted or decoded data
+    pdu: loriotPayload.encdata,  // Assuming encrypted or decoded data
     txtime: new Date(loriotPayload.ts),
     serverName: "Loriot",
 
     // Optional fields for Loriot
+    gwEui: loriotPayload?.gws?.[0]?.gweui ?? null, // Extract the gateway EUI from the first gateway
+    rssi: loriotPayload?.gws?.[0]?.rssi ?? null, // Extract RSSI from the first gateway
+    snr: loriotPayload?.gws?.[0]?.snr ?? null,
     bat: loriotPayload.bat ?? null,
     fcnt: loriotPayload.fcnt ?? null,
     offline: loriotPayload.offline ?? null,
