@@ -72,8 +72,8 @@ const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
     //   data: deviceData,
     // });
     // return savedData;
-    console.log("saved data: ", deviceData);
-    return deviceData;
+    console.log("saved data------> mapLoriot: ", deviceData);
+    // return deviceData;
   } catch (error) {
     console.error("Error inserting Loriot device data:", error);
     throw new Error("Failed to save Loriot device data");

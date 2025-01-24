@@ -36,8 +36,7 @@ app.post('/uplink-messages', async (req, res) => {
     //       decoded: message.decoded || null,
     //     },
     //   });
-    mapLoriotPayloadToNativeModel(message);
-    console.log("getting the data...",message);    
+    mapLoriotPayloadToNativeModel(message);   
 }
 
     console.log('Uplink messages stored successfully.');
