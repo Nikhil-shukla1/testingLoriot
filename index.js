@@ -12,11 +12,11 @@ app.post('/uplink-messages', async (req, res) => {
     console.log("testing the uplink----");
   try {
     const uplinkData = req.body; // Extract data from request body
-    console.log('Request body--------:', uplinkData);
+    console.log('Request body:', uplinkData);
 
     // Ensure uplinkData is an array or handle single objects
     const dataToInsert = Array.isArray(uplinkData) ? uplinkData : [uplinkData];
-    // console.log('Data to insert:', dataToInsert);
+    console.log('Data to insert:', dataToInsert);
 
     // Store each uplink message in the database
     for (const message of dataToInsert) {
@@ -36,7 +36,8 @@ app.post('/uplink-messages', async (req, res) => {
     //       decoded: message.decoded || null,
     //     },
     //   });
-    mapLoriotPayloadToNativeModel(message);   
+    mapLoriotPayloadToNativeModel(message);
+    console.log("getting the data...",message);    
 }
 
     console.log('Uplink messages stored successfully.');

@@ -49,28 +49,22 @@ const mapSenRaPayloadToNativeModel = async(senRaPayload)=> {
 // Mapping function for Loriot Payload
 const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
   const deviceData = {
-    devEui: loriotPayload.EUI, // EUI to devEui
-    seqno: loriotPayload.seqno, // Sequence number
-    port: loriotPayload.port, // Port
-    ack: loriotPayload.ack, // Acknowledgment status
-    pdu: loriotPayload.data, // Payload data
-    txtime: new Date(loriotPayload.ts), // Convert timestamp to DateTime
-    serverName: 'Loriot', // Set serverName to Loriot
+    devEui: loriotPayload.EUI,
+    seqno: loriotPayload.seqno,
+    port: loriotPayload.port,
+    ack: loriotPayload.ack,
+    pdu: loriotPayload.data || loriotPayload.encdata,  // Assuming encrypted or decoded data
+    txtime: new Date(loriotPayload.ts),
+    serverName: "Loriot",
 
-    // Loriot-specific fields
-    bat: loriotPayload.bat, // Battery status
-    fcnt: loriotPayload.fcnt, // Frame counter
-    offline: loriotPayload.offline, // Connection status
-    decodedData: loriotPayload.confirmed ? { confirmed: true } : null, // Decoded payload example
-
-    // SenRa fields that do not apply (set as null)
-    joinId: null,
-    gwEui: loriotPayload?.gws[0]?.gweui || null, // Gateway EUI
-    rssi: loriotPayload?.gws[0]?.rssi || null, // RSSI from first gateway
-    snr: loriotPayload?.gws[0]?.snr || null, // SNR from first gateway
-    freq: loriotPayload?.freq / 1e6, // Frequency in MHz
-    channel: null, // Not provided
-    datarate: loriotPayload.dr, // Data rate
+    // Optional fields for Loriot
+    gwEui: loriotPayload?.gws?.[0]?.gweui ?? null, // Extract the gateway EUI from the first gateway
+    rssi: loriotPayload?.gws?.[0]?.rssi ?? null, // Extract RSSI from the first gateway
+    snr: loriotPayload?.gws?.[0]?.snr ?? null,
+    bat: loriotPayload.bat ?? null,
+    fcnt: loriotPayload.fcnt ?? null,
+    offline: loriotPayload.offline ?? null,
+    decodedData: loriotPayload.decoded ?? null,
     dup: null,
     estLat: null,
     estLng: null,
@@ -89,8 +83,8 @@ const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
     //   data: deviceData,
     // });
     // return savedData;
-    console.log("saved data------> mapLoriot: ", deviceData);
-    // return deviceData;
+    console.log("saved data: ", deviceData);
+    return deviceData;
   } catch (error) {
     console.error("Error inserting Loriot device data:", error);
     throw new Error("Failed to save Loriot device data");
