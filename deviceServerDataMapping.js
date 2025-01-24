@@ -47,7 +47,7 @@ const mapSenRaPayloadToNativeModel = async(senRaPayload)=> {
 }
 
 // Mapping function for Loriot Payload
-const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
+const mapLoriotPayloadToNativeModel = (loriotPayload)=> {
   const deviceData = {
     devEui: loriotPayload.EUI,
     seqno: loriotPayload.seqno,
