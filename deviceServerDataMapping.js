@@ -65,10 +65,10 @@ const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
 
     // SenRa fields that do not apply (set as null)
     joinId: null,
-    gwEui: loriotPayload.gws[0]?.gweui || null, // Gateway EUI
-    rssi: loriotPayload.gws[0]?.rssi || null, // RSSI from first gateway
-    snr: loriotPayload.gws[0]?.snr || null, // SNR from first gateway
-    freq: loriotPayload.freq / 1e6, // Frequency in MHz
+    gwEui: loriotPayload?.gws[0]?.gweui || null, // Gateway EUI
+    rssi: loriotPayload?.gws[0]?.rssi || null, // RSSI from first gateway
+    snr: loriotPayload?.gws[0]?.snr || null, // SNR from first gateway
+    freq: loriotPayload?.freq / 1e6, // Frequency in MHz
     channel: null, // Not provided
     datarate: loriotPayload.dr, // Data rate
     dup: null,
