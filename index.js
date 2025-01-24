@@ -12,7 +12,7 @@ app.post('/uplink-messages', async (req, res) => {
     console.log("testing the uplink----");
   try {
     const uplinkData = req.body; // Extract data from request body
-    console.log('Request body:', uplinkData);
+    console.log('Request body--------:', uplinkData);
 
     // Ensure uplinkData is an array or handle single objects
     const dataToInsert = Array.isArray(uplinkData) ? uplinkData : [uplinkData];

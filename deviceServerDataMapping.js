@@ -2,7 +2,7 @@
 // const prisma = new PrismaClient;
 
 // Mapping function for SenRa Payload
-const mapSenRaPayloadToNativeModel = async(senRaPayload)=> {
+const mapSenRaPayloadToNativeModel = async (senRaPayload) => {
   const deviceData = {
     devEui: senRaPayload.devEui,
     seqno: senRaPayload.seqno,
@@ -47,43 +47,62 @@ const mapSenRaPayloadToNativeModel = async(senRaPayload)=> {
 }
 
 // Mapping function for Loriot Payload
-const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
+const mapLoriotPayloadToNativeModel = async (loriotPayload) => {
+  // const deviceData = {
+  //   devEui: loriotPayload.EUI, // EUI to devEui
+  //   seqno: loriotPayload.seqno, // Sequence number
+  //   port: loriotPayload.port, // Port
+  //   ack: loriotPayload.ack, // Acknowledgment status
+  //   pdu: loriotPayload.data, // Payload data
+  //   txtime: new Date(loriotPayload.ts), // Convert timestamp to DateTime
+  //   serverName: 'Loriot', // Set serverName to Loriot
+
+  //   // Loriot-specific fields
+  //   bat: loriotPayload.bat, // Battery status
+  //   fcnt: loriotPayload.fcnt, // Frame counter
+  //   offline: loriotPayload.offline, // Connection status
+  //   decodedData: loriotPayload.confirmed ? { confirmed: true } : null, // Decoded payload example
+
+  //   // SenRa fields that do not apply (set as null)
+  //   joinId: null,
+  //   gwEui: loriotPayload?.gws[0]?.gweui || null, // Gateway EUI
+  //   rssi: loriotPayload?.gws[0]?.rssi || null, // RSSI from first gateway
+  //   snr: loriotPayload?.gws[0]?.snr || null, // SNR from first gateway
+  //   freq: loriotPayload?.freq / 1e6, // Frequency in MHz
+  //   channel: null, // Not provided
+  //   datarate: loriotPayload.dr, // Data rate
+  //   dup: null,
+  //   estLat: null,
+  //   estLng: null,
+  //   cfgLat: null,
+  //   cfgLng: null,
+  //   devClass: null,
+  //   devType: null,
+  //   devProfile: null,
+  //   metadata: null,
+  //   ackDnMsgId: null,
+  //   ackDnSeqNo: null,
+  // };
   const deviceData = {
-    devEui: loriotPayload.EUI, // EUI to devEui
-    seqno: loriotPayload.seqno, // Sequence number
-    port: loriotPayload.port, // Port
-    ack: loriotPayload.ack, // Acknowledgment status
-    pdu: loriotPayload.data, // Payload data
-    txtime: new Date(loriotPayload.ts), // Convert timestamp to DateTime
-    serverName: 'Loriot', // Set serverName to Loriot
-
-    // Loriot-specific fields
-    bat: loriotPayload.bat, // Battery status
-    fcnt: loriotPayload.fcnt, // Frame counter
-    offline: loriotPayload.offline, // Connection status
-    decodedData: loriotPayload.confirmed ? { confirmed: true } : null, // Decoded payload example
-
-    // SenRa fields that do not apply (set as null)
-    joinId: null,
-    gwEui: loriotPayload?.gws[0]?.gweui || null, // Gateway EUI
-    rssi: loriotPayload?.gws[0]?.rssi || null, // RSSI from first gateway
-    snr: loriotPayload?.gws[0]?.snr || null, // SNR from first gateway
-    freq: loriotPayload?.freq / 1e6, // Frequency in MHz
-    channel: null, // Not provided
-    datarate: loriotPayload.dr, // Data rate
-    dup: null,
-    estLat: null,
-    estLng: null,
-    cfgLat: null,
-    cfgLng: null,
-    devClass: null,
-    devType: null,
-    devProfile: null,
-    metadata: null,
-    ackDnMsgId: null,
-    ackDnSeqNo: null,
-  };
-
+    devEui: data.EUI,
+    seqno: data.seqno,
+    port: data.port,
+    ack: data.ack,
+    pdu: data.data,
+    txtime: new Date(data.ts), // Convert timestamp to DateTime
+    serverName: 'Loriot', // Static for Loriot
+    freq: data.freq,
+    datarate: data.dr,
+    rssi: data.rssi,
+    snr: data.snr,
+    bat: data.bat,
+    fcnt: data.fcnt,
+    offline: data.offline,
+    decodedData: { confirmed: data.confirmed }, // Store the `confirmed` flag in `decodedData`
+    toa: data.toa, // Time on Air
+    devaddr: data.devaddr, // Device Address
+    cmd: data.cmd, // Command type
+  }
   try {
     // const savedData = await prisma.deviceServerData.create({
     //   data: deviceData,
@@ -98,7 +117,7 @@ const mapLoriotPayloadToNativeModel = async(loriotPayload)=> {
 }
 
 // Mapping function for TTN Payload
-const mapTtnPayloadToNativeModel = async(ttnPayload)=> {
+const mapTtnPayloadToNativeModel = async (ttnPayload) => {
   const deviceData = {
     devEui: ttnPayload.devEui,
     seqno: ttnPayload.seqno,
@@ -144,4 +163,4 @@ const mapTtnPayloadToNativeModel = async(ttnPayload)=> {
 
 
 
-module.exports = {mapSenRaPayloadToNativeModel,mapLoriotPayloadToNativeModel,mapTtnPayloadToNativeModel}
+module.exports = { mapSenRaPayloadToNativeModel, mapLoriotPayloadToNativeModel, mapTtnPayloadToNativeModel }
