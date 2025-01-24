@@ -19,7 +19,7 @@ app.post('/uplink-messages', async (req, res) => {
     // console.log('Data to insert:', dataToInsert);
 
     // Store each uplink message in the database
-    for (const message of dataToInsert) {
+    for (const message of uplinkData) {
     //   await prisma.uplinkMessage.create({
     //     data: {
     //       cmd: message.cmd,
